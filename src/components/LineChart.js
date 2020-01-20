@@ -2,51 +2,48 @@ import React, {Component} from "react"
 import {Button} from "element-react"
 import Chart from "chart.js"
 
-class Chart extends Component {
+class LineChart extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
-                }]
-            }
-        }
+        this.chartRef = React.createRef();
     }
-    createChart() {
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            // The type of chart we want to create
+    componentDidMount() {
+        new Chart(this.chartRef.current, {
             type: 'line',
-
-            // The data for our dataset
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
                     label: 'My First dataset',
-                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: '#3093d6',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                    fill: false,
+                }, {
+                    label: 'Line Dataset',
+                    borderDash: [10, 10],
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
-                }]
-            },
+                    data: [20, 30, 20, 10],
 
-            // Configuration options go here
-            options: {}
+                    type: 'line'
+                }],
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            },
         });
     }
+
     render() {
         return (
             <div>
                 <Button>5M</Button>
-                <canvas id="myChart"></canvas>
-                {this.createChart()}
+                <canvas ref={this.chartRef}></canvas>
             </div>
         )
     }
 }
 
-export default Chart;
+export default LineChart;
