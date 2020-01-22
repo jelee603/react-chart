@@ -4,10 +4,11 @@ import echarts from "echarts"
 class MixChart extends Component {
     constructor(props) {
         super(props);
+        this.chartRef = React.createRef();
     }
     componentDidMount() {
         // based on prepared DOM, initialize echarts instance
-        const myChart = echarts.init(document.getElementById("main"));
+        const myChart = echarts.init(this.chartRef.current);
 
         // specify chart configuration item and data
         const option = {
@@ -19,13 +20,41 @@ class MixChart extends Component {
                 data:['Sales']
             },
             xAxis: {
-                data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+                data: ['January', 'February', 'March', 'April', 'May', 'June'],
             },
             yAxis: {},
             series: [{
                 name: 'Sales',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                type: 'line',
+                smooth: true,
+                data: [5, 20, 36, 10, 10, 20],
+                itemStyle: {
+                    color: '#8ec6ad'
+                },
+                stack: 1,
+
+            },{
+                name: 'Sales',
+                type: 'line',
+                smooth: true,
+                data: [5, 20, 36, 10, 10, 20],
+                itemStyle: {
+                    color: '#8ec6ad'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#8ec6ad'
+                    }, {
+                        offset: 1,
+                        color: '#ffe'
+                    }])
+                },
+                lineStyle: {
+                    type: 'dotted',
+                },
+                stack: 1,
+
             }]
         };
 
@@ -35,7 +64,7 @@ class MixChart extends Component {
     render() {
         return (
             <div>
-                <div id="main" style={{width: '600px', height:'400px'}} />
+                <div ref={this.chartRef} style={{width: '600px', height:'400px'}} />
             </div>
         )
     }

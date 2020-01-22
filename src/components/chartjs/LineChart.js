@@ -8,23 +8,27 @@ class LineChart extends Component {
         this.chartRef = React.createRef();
     }
     componentDidMount() {
+        const ctx = this.chartRef.current.getContext('2d');
+        const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientStroke.addColorStop(0, "#8ec6ad");
+        gradientStroke.addColorStop(1, "#ffe");
+
         new Chart(this.chartRef.current, {
             type: 'line',
             data: {
                 datasets: [{
                     label: 'My First dataset',
                     borderColor: '#3093d6',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+                    data: [5, 20, 36, 10, 10, 20],
                     fill: false,
                 }, {
                     label: 'Line Dataset',
                     borderDash: [10, 10],
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [20, 30, 20, 10],
-
-                    type: 'line'
+                    borderColor: gradientStroke,
+                    data: [5, 20, 36, 10, 10, 20],
+                    backgroundColor: gradientStroke,
                 }],
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
             },
             options: {
                 scales: {
