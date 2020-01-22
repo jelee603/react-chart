@@ -35,7 +35,6 @@ class LineChart extends Component {
             },
         });
     }
-
     render() {
         return (
             <div>
